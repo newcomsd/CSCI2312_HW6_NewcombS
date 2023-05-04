@@ -53,8 +53,12 @@ bool ShapeReader::readFile(const std::string& filename) noexcept(false){
                     std::snprintf(error,256,"Bad character in input file. (%c)",temp_char);
                     throw std::runtime_error(error);
                 }
-                current_row_counter++;
+                // Correct for an off-by-one error
+                if(!temp_string_stream.eof()){
+                    current_row_counter++;
+                }
             }
+
             if(initial_width == -1){
                 initial_width = current_row_counter;
             }else{
